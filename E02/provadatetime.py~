@@ -1,0 +1,12 @@
+import datetime
+from datetime import datetime, timedelta
+datenow = datetime.now()
+anno = datenow.year
+ora = datenow.hour
+secondo = datenow.second
+print('siamo nell anno ', anno, ', nell ora ',ora, ' e nel secondo ', secondo)
+
+""" definisco una data partendo da striga formattata come giorno mese anno"""
+mydate_str = '13-5-2004'
+mydate = datetime.strptime(mydate_str, "%d-%m-%Y")
+print('data: ', mydate)

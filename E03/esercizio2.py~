@@ -1,0 +1,44 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+dati = pd.read_csv('ExoplanetsPars_2025.csv', comment = '#')
+print(dati.columns)
+
+#creo grafico con assi logaritmici per massa in funzione del periodo
+plt.scatter(dati['pl_orbper'], dati['pl_bmassj'], color='royalblue', s=32, label='log(massa)')
+plt.xlabel('massa')
+plt.ylabel('periodo')
+plt.xscale('log')
+plt.yscale('log')
+plt.legend()
+plt.show()
+
+#grafico Rmax^2/m in funzione del periodo
+y = np.power(dati['pl_orbsmax'],2) / dati['st_mass']
+x = dati['pl_orbper']
+plt.scatter(x,y, color='limegreen',s=32)
+plt.xscale('log')
+plt.yscale('log')
+plt.xlabel('periodo')
+plt.ylabel('Rmax^2/m')
+plt.show()
+
+transit = dati.loc[dati['discoverymethod'] == 'Transit']
+radial_velocity = dati.loc[dati['discoverymethod'] == 'Radial Velocity']
+plt.scatter(transit['pl_orbper'],transit['pl_bmassj'], color='yellow',alpha = 0.7, s=32, label = 'massa Transit')
+plt.xscale('log')
+plt.yscale('log')
+plt.xlabel('periodo')
+plt.ylabel('massa')
+plt.scatter(radial_velocity['pl_orbper'], radial_velocity['pl_bmassj'], color='limegreen', alpha= 0.4, s=32, label = 'massa radial velocity')
+plt.legend()
+plt.show()
+
+
+# creo istogrammi diversi per le masse dividendo per metodo di scoperta
+n, bins, pin = plt.hist(transit['pl_bmassj'], bins= 100,  color= 'gold', alpha=0.6)
+n, bins, pin = plt.hist(radial_velocity['pl_bmassj'], bins= 100,  color= 'blue', alpha=0.6)
+plt.xlabel('massa')
+plt.xscale('log')
+plt.show()
