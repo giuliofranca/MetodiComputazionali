@@ -1,0 +1,16 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+
+dati = pd.read_csv('hit_times_M0.csv')
+n, bins, p = plt.hist(dati['hit_time'], bins = 50,  color= 'gold')
+plt.xlabel('tempo (ns)', fontsize=16)
+plt.show()
+
+#istogramma delle differenze dei tempi fra hit consecutivi
+differenze_tempi = dati['hit_time'].diff().fillna(0)
+mask = differenze_tempi > 0
+diff_tempi_log = np.log10(differenze_tempi[mask])
+n, bins, p = plt.hist(diff_tempi_log, bins = 50, color='green', alpha = 0.7)
+plt.xlabel('$\Delta t$ (ns)', fontsize=16)
+plt.show()

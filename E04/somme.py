@@ -1,0 +1,31 @@
+import numpy as np
+
+# funzione che restituisce somma dei primi n numeri naturali
+def somma(n):
+    somma = 0
+    for i in range(n+1):
+        somma = somma + i
+    return somma
+
+# funzione che restituisce somma radici
+def somma_rad(n):
+    somma_r = 0
+    for i in range(n+1):
+        somma_r = somma_r + np.sqrt(i)
+    return somma_r
+
+def somma_prod(n):
+    somma = 0
+    prodotto =1
+    for i in range(n+1):
+        somma = somma + i
+        prodotto = prodotto*i
+
+    return somma, prodotto
+
+def somma_opzionale(n, alpha=1):
+    somma = 0
+    for i in range(n+1):
+        somma = somma + np.power(i, alpha)
+
+    return somma

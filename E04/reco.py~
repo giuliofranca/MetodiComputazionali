@@ -1,0 +1,21 @@
+import numpy as np
+import pandas as pd
+from functools import total_ordering
+
+@total_ordering
+class hit:
+    def __init__(self, modulo, sensore, tempo):
+        self.modulo = modulo
+        self.sensore = sensore
+        self.tempo = tempo
+
+    def tempo_minore(self,other):
+        if(self.tempo != other.tempo):
+            return (self.tempo < other.tempo)
+
+        else:
+            if(self.modulo != other.modulo):
+                return (self.modulo < other.modulo)
+            else:
+                return(self.sensore < other.sensore)
+            
