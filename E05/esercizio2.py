@@ -1,0 +1,46 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy import integrate
+
+# definisco parametri di interesse
+k = 0.1
+m = 1
+def V6(x):
+     return k*np.power(x,6)
+
+# definisco la funzione che calcola il periodo in funzione della x0
+def periodo(x0):
+    
+    def integranda(x):
+     return 1 / np.sqrt(V6(x0) - V6(x))
+
+    distanze = np.linspace(0,x0*(1-1e-10), 200)
+    periodo = np.sqrt(8*m) * integrate.simpson(integranda(distanze), x = distanze)
+    return periodo
+
+print('il periodo relativo a x0 = 5 è', periodo(5))
+xzeri = np.linspace(10,50,200, endpoint=False)
+periodi = [periodo(k) for k in xzeri]
+plt.plot(xzeri, periodi)
+plt.xlabel('x0 (m)')
+plt.ylabel('T(s)')
+plt.show()
+
+# uso un altra energia potenziale
+def V2(x):
+    return k*np.power(x,2)
+
+def periodo2(x0):
+    
+    def integranda(x):
+     return 1 / np.sqrt(V2(x0) - V2(x))
+
+    distanze = np.linspace(0,x0*(1-1e-10), 200)
+    periodo = np.sqrt(8*m) * integrate.simpson(integranda(distanze), x = distanze)
+    return periodo
+
+periodi2 = [periodo2(k) for k in xzeri]
+plt.plot(xzeri, periodi2)
+plt.xlabel('x0 (m)')
+plt.ylabel('T(s)')
+plt.show()

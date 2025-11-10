@@ -1,0 +1,59 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy import integrate
+import argparse
+import pandas as pd
+
+# leggo il file
+dati = pd.read_csv('vel_vs_time.csv')
+plt.plot(dati['t'], dati['v'], label='velocita in funzione del tempo')
+plt.xlabel('tempo (s)')
+plt.ylabel('velocita (m/s)')
+plt.legend()
+plt.show()
+
+# calcolo integrale definito della distanza totale
+distanza_totale = integrate.simpson(dati['v'], dx = 0.5)
+print('La distanza totale è ', distanza_totale,' metri')
+
+#distanza in funzione del tempo
+distanze = []
+for i in range(len(dati['t'])):
+               distanza_cumulativa = integrate.simpson(y = dati['v'][:i+1], x = dati['t'][:i+1])
+               distanze.append(distanza_cumulativa)
+
+array_distanze = np.array(distanze)
+
+#grafico della distanza in funzione del tempo
+plt.plot(dati['t'], array_distanze, label='distanza in funzione del tempo')
+plt.xlabel('tempo (s)')
+plt.ylabel('distanza(m)')
+plt.legend()
+plt.grid('True')
+plt.show()
+
+# modulo argparse per eseguire comandi da terminale
+parser = argparse.ArgumentParser(description="Analisi dati velocità-tempo con integrazione Simpson")
+parser.add_argument('--file', default='vel_vs_time.csv', help = 'ciao', action= 'store_true')
+parser.add_argument('--velocita', help= 'grafico velocita in funzione del tempo', action= 'store_true')
+parser.add_argument('--distanza', help = 'grafico distanza in funzione del tempo', action='store_true')
+
+args = parser.parse_args()
+if args.velocita:
+    plt.figure()
+    plt.plot(t, v, color="orange", label="Velocità")
+    plt.xlabel("Tempo [s]")
+    plt.ylabel("Velocità [m/s]")
+    plt.title("Grafico velocità-tempo")
+    plt.legend()
+    plt.grid(True)
+
+if args.distanza:
+    plt.figure()
+    plt.plot(t, distanze, color="blue", label="Distanza")
+    plt.xlabel("Tempo [s]")
+    plt.ylabel("Distanza [m]")
+    plt.title("Grafico distanza-tempo")
+    plt.legend()
+    plt.grid(True)
+plt.show()
